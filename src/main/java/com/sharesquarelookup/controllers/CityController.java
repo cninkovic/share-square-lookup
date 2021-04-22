@@ -1,34 +1,35 @@
 package com.sharesquarelookup.controllers;
 
-import com.sharesquarelookup.model.Country;
-import com.sharesquarelookup.services.contracts.CountryService;
+
+import com.sharesquarelookup.model.City;
+import com.sharesquarelookup.services.contracts.CityService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/countries")
+@RequestMapping("/cities")
 @Controller
-public class CountryController {
-    private final CountryService countryService;
+public class CityController {
+    private CityService cityService;
 
-    public CountryController(CountryService countryService) {
-        this.countryService = countryService;
+    public CityController(CityService cityService) {
+        this.cityService = cityService;
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String>  addCountry(@RequestBody Country c){
+    public ResponseEntity<String>  addCountry(@RequestBody City c){
 
-        countryService.save(c);
+        cityService.save(c);
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("MyResponseHeader", c.getName());
-        return new ResponseEntity<String>("Country created", responseHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<>("City created", responseHeaders, HttpStatus.CREATED);
     }
 
     @GetMapping("/getByName")
-    public ResponseEntity<Country> getByName(@RequestParam String name){
-        Country find =  countryService.getCountryByName(name);
+    public ResponseEntity<City> getByName(@RequestParam String name){
+        City find =  cityService.getCityByName(name);
 
         if(find != null) {
             HttpHeaders responseHeaders = new HttpHeaders();
@@ -40,4 +41,6 @@ public class CountryController {
         responseHeaders.set("MyResponseHeader", "N/A");
         return new ResponseEntity<>(find, responseHeaders, HttpStatus.NOT_FOUND);
     }
+
+
 }

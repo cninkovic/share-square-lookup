@@ -45,4 +45,9 @@ public class CountrySDJpaService implements CountryService {
     public void deleteById(Long aLong) {
         countryRepository.deleteById(aLong);
     }
+
+    @Override
+    public Country getCountryByName(String name) {
+        return countryRepository.getCountryByName(name);
+    }
 }
